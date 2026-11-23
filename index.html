@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Kyota Ikuyama</title>
+<script>
+  // 保存した設定があればそれを、なければ OS の設定を使う
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (e) {}
+    var dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.dataset.theme = dark ? "dark" : "light";
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400&amp;family=Noto+Sans+JP:wght@400&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="topbar">
+  <button class="theme" type="button" aria-pressed="false" aria-label="ダークモード" title="ダークモード">
+    <img class="icon to-dark" src="assets/icons/moon.svg" width="48" height="48" alt="">
+    <img class="icon to-light" src="assets/icons/sun.svg" width="48" height="48" alt="">
+  </button>
+</div>
+<main>
+  <header class="profile">
+    <div class="avatar"><img src="assets/avatar.jpg" width="120" height="120" alt=""></div>
+    <div class="who">
+      <h1>Kyota Ikuyama</h1>
+      <button class="more" type="button" aria-expanded="false" aria-controls="links" aria-label="リンクを表示"><img class="icon" src="assets/icons/chevron-right.svg" width="24" height="24" alt=""></button>
+      <ul class="links" id="links" hidden>
+        <li><a href="https://github.com/4rna-y" aria-label="GitHub" title="GitHub"><span class="gh"><img class="icon" src="assets/icons/github.svg" width="29" height="32" alt=""></span></a></li>
+      </ul>
+    </div>
+  </header>
+  <section class="projects" aria-labelledby="projects">
+    <h2 id="projects">Projects.</h2>
+    <ul class="cards">
+      <li><a class="card tint-gasho" href="works/gasho.html">
+        <span class="thumb"><span class="emoji" aria-hidden="true">🙏</span></span>
+        <span class="label"><span>Gasho</span><img class="icon" src="assets/icons/chevron-right.svg" width="24" height="24" alt=""></span>
+      </a></li>
+      <li><a class="card tint-bobert" href="works/bobert.html">
+        <span class="thumb"><span class="emoji" aria-hidden="true">🤖</span></span>
+        <span class="label"><span>Bobert</span><img class="icon" src="assets/icons/chevron-right.svg" width="24" height="24" alt=""></span>
+      </a></li>
+      <li><a class="card tint-dopagakix" href="works/dopagakix.html">
+        <span class="thumb"><span class="emoji" aria-hidden="true">🎥</span></span>
+        <span class="label"><span>Dopagakix</span><img class="icon" src="assets/icons/chevron-right.svg" width="24" height="24" alt=""></span>
+      </a></li>
+      <li><a class="card tint-awakeverify" href="works/awakeverify.html">
+        <span class="thumb"><span class="emoji" aria-hidden="true">👀</span></span>
+        <span class="label"><span>AwakeVerify</span><img class="icon" src="assets/icons/chevron-right.svg" width="24" height="24" alt=""></span>
+      </a></li>
+    </ul>
+  </section>
+  <section class="career-section" aria-labelledby="career">
+    <h2 id="career">Career.</h2>
+    <ol class="career">
+      <li>
+        <div class="rail"><span class="badge"><img class="icon" src="assets/icons/university.svg" width="48" height="48" alt=""></span></div>
+        <div class="what">
+          <p class="role"><span class="title">University</span> <span class="date"><time datetime="2024-04">2024 04</time></span></p>
+          <p class="org" lang="en">International Professional University of Technology in Tokyo</p>
+        </div>
+      </li>
+      <li>
+        <div class="rail"><span class="badge"><img class="icon" src="assets/icons/briefcase.svg" width="48" height="48" alt=""></span></div>
+        <div class="what">
+          <p class="role"><span class="title">Internship</span> <span class="date"><time datetime="2025-10">2025 10</time> - <time datetime="2026-01">2026 01</time></span></p>
+          <p class="org">株式会社​ベースメントファクトリープロダクション</p>
+        </div>
+      </li>
+      <li>
+        <div class="rail"><span class="badge"><img class="icon" src="assets/icons/briefcase.svg" width="48" height="48" alt=""></span></div>
+        <div class="what">
+          <p class="role"><span class="title">Internship</span> <span class="date"><time datetime="2026-08">2026 08</time> - <time datetime="2026-09">2026 09</time></span></p>
+          <p class="org">丸紅株式会社 バリュークリエイションオフィス</p>
+        </div>
+      </li>
+      <li>
+        <div class="rail"><span class="badge"><img class="icon" src="assets/icons/briefcase.svg" width="48" height="48" alt=""></span></div>
+        <div class="what">
+          <p class="role"><span class="title">Freelancer</span> <span class="date"><time datetime="2026-09">2026 09</time> -</span></p>
+          <p class="org">Digital Experts株式会社</p>
+        </div>
+      </li>
+      <li>
+        <div class="rail"><span class="badge"><img class="icon" src="assets/icons/briefcase.svg" width="48" height="48" alt=""></span></div>
+        <div class="what">
+          <p class="role"><span class="title">Internship</span> <span class="date"><time datetime="2026-10">2026 10</time> - <time datetime="2026-11">2026 11</time></span></p>
+          <p class="org">株式会社​ベースメントファクトリープロダクション</p>
+        </div>
+      </li>
+    </ol>
+    <div class="continues" aria-hidden="true"><span></span><span></span><span></span></div>
+  </section>
+</main>
+<script src="site.js"></script>
+</body>
+</html>

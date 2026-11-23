@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Dopagakix — Kyota Ikuyama</title>
+<script>
+  // 保存した設定があればそれを、なければ OS の設定を使う
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (e) {}
+    var dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.dataset.theme = dark ? "dark" : "light";
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400&amp;family=Noto+Sans+JP:wght@400&amp;display=swap">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="topbar">
+  <button class="theme" type="button" aria-pressed="false" aria-label="ダークモード" title="ダークモード">
+    <img class="icon to-dark" src="../assets/icons/moon.svg" width="48" height="48" alt="">
+    <img class="icon to-light" src="../assets/icons/sun.svg" width="48" height="48" alt="">
+  </button>
+</div>
+<main>
+  <a class="back" href="../index.html#projects"><img class="icon" src="../assets/icons/chevron-right.svg" width="24" height="24" alt=""><span>Projects.</span></a>
+  <article class="work tint-dopagakix">
+    <div class="player">
+      <video src="../videos/dopagakix.mp4" poster="../posters/dopagakix.jpg" controls muted loop playsinline preload="metadata" aria-label="Dopagakix の紹介動画"></video>
+    </div>
+    <div class="info">
+      <h1>Dopagakix</h1>
+      <p class="desc">AI の作業結果を、ショート動画にまとめる</p>
+      <a class="repo" href="https://github.com/4rtofl/Dopagakix" aria-label="Dopagakix の GitHub" title="GitHub"><span class="gh"><img class="icon" src="../assets/icons/github.svg" width="29" height="32" alt=""></span></a>
+    </div>
+  </article>
+</main>
+<script src="../site.js"></script>
+</body>
+</html>

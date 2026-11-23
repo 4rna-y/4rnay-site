@@ -1,0 +1,271 @@
+/* Figma の MyPage(1920 × 2160 のフレーム)の寸法を、--scale 倍(70%、本人の希望)に縮めて写している。
+   --u は 1 デザイン px の大きさ。PC では 0.7px。狭い画面では、640 の列を画面の幅に合わせたうえで 70% にする。
+   書体は Figma と同じ Inter と Noto Sans JP(Google Fonts から読み込む)。和文は Inter にないので
+   Noto Sans JP で出る。Figma で Noto Sans JP を指定している所属の行は、英字も Noto Sans JP にする。 */
+
+:root {
+  --scale: 0.7;
+  --u: calc(var(--scale) * 1px);
+  --bg: #ffffff;
+  --fg: #000000;
+  --sub: #595959;
+  --card-line: rgba(191, 191, 191, 0.75);
+  --well: #f2f2f2;
+  --icon-filter: none;
+  color-scheme: light;
+}
+
+/* ダーク: 背景は真っ黒にせず、濃い灰色にする(真っ黒は黒すぎた)。文字は白、灰色の文字は反転した値。
+   経歴の丸とカードの線は、背景との明るさ(L*)の差を、真っ黒の背景のときと同じにしている */
+:root[data-theme="dark"] {
+  --bg: #1c1c1c;
+  --fg: #ffffff;
+  --sub: #a6a6a6;
+  --card-line: #474747;
+  --well: #2f2f2f;
+  --icon-filter: invert(1);
+  color-scheme: dark;
+}
+
+/* スクリプトが動かないときは OS の設定に合わせる */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #1c1c1c;
+    --fg: #ffffff;
+    --sub: #a6a6a6;
+    --card-line: #474747;
+    --well: #2f2f2f;
+    --icon-filter: invert(1);
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Inter", "Noto Sans JP", sans-serif;
+  font-weight: 400;
+  line-height: 1.21;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, p, ul, ol { margin: 0; padding: 0; font-weight: 400; font-size: inherit; }
+ul, ol { list-style: none; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+img { display: block; }
+.icon { filter: var(--icon-filter); }
+.sr {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+
+/* 右上: 明暗の切り替え。Figma の月のアイコンと同じ位置に置く */
+.topbar { position: absolute; top: calc(30 * var(--u)); right: calc(30 * var(--u)); display: flex; }
+.theme, .theme img { width: calc(48 * var(--u)); height: calc(48 * var(--u)); }
+:root[data-theme="light"] .to-light,
+:root[data-theme="dark"] .to-dark,
+:root:not([data-theme]) .to-light { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .to-light { display: block; }
+  :root:not([data-theme]) .to-dark { display: none; }
+}
+
+main {
+  width: calc(640 * var(--u));
+  margin: 0 auto;
+  padding: calc(120 * var(--u)) 0 calc(171 * var(--u));
+}
+
+/* 名前: アイコンは左の列の右端に、名前は右の列の左端にそろえる(カードの 2 列と同じ線) */
+.profile {
+  display: grid;
+  grid-template-columns: repeat(2, calc(300 * var(--u)));
+  column-gap: calc(30 * var(--u));
+  padding: 0 calc(5 * var(--u));
+  align-items: center;
+}
+.avatar {
+  justify-self: end;
+  width: calc(120 * var(--u)); height: calc(120 * var(--u));
+  border-radius: 50%; overflow: hidden;
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.who { display: flex; align-items: center; }
+.who h1 { font-size: calc(40 * var(--u)); white-space: nowrap; }
+.more, .links { position: relative; top: calc(3 * var(--u)); margin-left: calc(15 * var(--u)); }
+.more, .more img { width: calc(24 * var(--u)); height: calc(24 * var(--u)); }
+.more img { transition: transform 0.2s; }
+.more[aria-expanded="true"] img { transform: rotate(180deg); }
+.links { display: flex; gap: calc(15 * var(--u)); }
+.links[hidden] { display: none; }
+.gh { display: block; position: relative; width: calc(36 * var(--u)); height: calc(36 * var(--u)); }
+.gh img {
+  position: absolute; left: calc(2 * var(--u)); top: calc(2 * var(--u));
+  width: calc(29.0168 * var(--u)); height: calc(32 * var(--u));
+}
+
+h2 { font-size: calc(32 * var(--u)); }
+
+/* Projects. */
+.projects { margin-top: calc(120 * var(--u)); }
+.cards {
+  margin-top: calc(30 * var(--u));
+  display: grid;
+  grid-template-columns: repeat(2, calc(300 * var(--u)));
+  gap: calc(30 * var(--u));
+  padding: 0 calc(5 * var(--u));
+}
+.card {
+  display: block;
+  width: calc(300 * var(--u)); height: calc(261 * var(--u));
+  padding: calc(15 * var(--u)) 0 0 calc(15 * var(--u));
+  border: 1px solid var(--card-line); border-radius: calc(32 * var(--u));
+  background: var(--bg);
+}
+.thumb {
+  display: flex; align-items: center; justify-content: center;
+  width: calc(270 * var(--u)); height: calc(184 * var(--u));
+  border-radius: calc(16 * var(--u));
+  background: var(--tint);
+}
+/* サムネイルは画像と同じ扱いにし、ダークでも色を変えない(暗くすると 🎥 が見えなくなる) */
+.emoji {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-size: calc(64 * var(--u)); line-height: 1;
+}
+.label {
+  display: flex; align-items: center; justify-content: space-between;
+  height: calc(60 * var(--u));
+  padding: 0 calc(16.5 * var(--u)) 0 calc(8 * var(--u));
+  font-size: calc(24 * var(--u));
+}
+.label img { width: calc(24 * var(--u)); height: calc(24 * var(--u)); }
+
+.tint-gasho { --tint: #b3cdff; }
+.tint-bobert { --tint: #ffdeb3; }
+.tint-dopagakix { --tint: #ffb3b4; }
+.tint-awakeverify { --tint: #b9ffb3; }
+
+/* Career. 1 件は 165 の高さ: 丸 90、間 15、線 45、間 15 */
+.career-section { margin-top: calc(60 * var(--u)); }
+.career { margin-top: calc(30 * var(--u)); }
+.career li {
+  display: grid;
+  grid-template-columns: calc(90 * var(--u)) 1fr;
+  column-gap: calc(30 * var(--u));
+  min-height: calc(165 * var(--u));
+}
+.rail { display: flex; flex-direction: column; align-items: center; }
+.rail::after {
+  content: "";
+  flex: 1 0 calc(45 * var(--u));
+  width: calc(8 * var(--u));
+  margin: calc(15 * var(--u)) 0;
+  border-radius: calc(8 * var(--u));
+  background: var(--well);
+}
+.badge {
+  flex: none;
+  display: grid; place-items: center;
+  width: calc(90 * var(--u)); height: calc(90 * var(--u));
+  border-radius: 50%; background: var(--well);
+}
+.badge img { width: calc(48 * var(--u)); height: calc(48 * var(--u)); }
+.what { padding: calc(22 * var(--u)) 0 calc(21 * var(--u)); }
+/* 日付は、役割の文字の箱と下端をそろえる(Figma の配置) */
+.role { display: flex; flex-wrap: wrap; align-items: flex-end; column-gap: calc(16 * var(--u)); }
+.role .title { font-size: calc(32 * var(--u)); }
+.role .date { font-size: calc(20 * var(--u)); color: var(--sub); white-space: nowrap; }
+/* 所属の 1 行目の中心を、役割の行の下端から 32 下にそろえる(Figma の配置) */
+.org {
+  margin-top: calc(32 * var(--u) - 0.605em);
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: calc(24 * var(--u));
+  color: var(--sub);
+  word-break: auto-phrase;
+  white-space: nowrap; /* Figma では幅が自動の 1 行(列の右端を少し越える) */
+}
+/* 大学名は、Figma では幅 518 の箱で折り返す */
+.org:lang(en) { font-family: "Inter", sans-serif; font-size: calc(28 * var(--u)); white-space: normal; }
+.continues {
+  display: flex; flex-direction: column; align-items: center; gap: calc(15 * var(--u));
+  width: calc(90 * var(--u));
+}
+.continues span {
+  width: calc(8 * var(--u)); height: calc(8 * var(--u));
+  border-radius: 50%; background: var(--well);
+}
+
+/* 制作物のページ(Figma にはないので仮に作った) */
+.back { display: inline-flex; align-items: center; gap: calc(8 * var(--u)); font-size: calc(32 * var(--u)); }
+.back img { width: calc(24 * var(--u)); height: calc(24 * var(--u)); transform: rotate(180deg); }
+.work {
+  margin-top: calc(30 * var(--u));
+  display: grid;
+  grid-template-columns: repeat(2, calc(300 * var(--u)));
+  column-gap: calc(30 * var(--u));
+  padding: 0 calc(5 * var(--u));
+  align-items: start;
+}
+.player {
+  padding: calc(15 * var(--u));
+  border: 1px solid var(--card-line); border-radius: calc(32 * var(--u));
+}
+.player video {
+  display: block; width: 100%; aspect-ratio: 9 / 16;
+  border-radius: calc(16 * var(--u));
+  background: var(--tint); object-fit: cover;
+}
+.info { padding-top: calc(15 * var(--u)); }
+.info h1 { font-size: calc(40 * var(--u)); }
+.info .desc {
+  margin-top: calc(15 * var(--u));
+  font-size: calc(24 * var(--u)); line-height: 1.6; color: var(--sub);
+  word-break: auto-phrase; text-wrap: pretty;
+}
+.info .repo { display: inline-block; margin-top: calc(24 * var(--u)); }
+
+@media (hover: hover) {
+  .card, .theme { transition: border-color 0.15s, background-color 0.15s; }
+  .card:hover { border-color: var(--sub); }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+/* 狭い画面: 640 の列を画面の幅(左右 16px を除く)に合わせたうえで、全体を --scale 倍にする。
+   文字の下限と、ボタンなどの寸法も --scale 倍にする */
+@media (max-width: 700px) {
+  :root { --u: calc(var(--scale) * (100vw - 32px) / 640); }
+  .topbar { top: calc(var(--scale) * 12px); right: calc(var(--scale) * 12px); }
+  .theme, .theme img { width: calc(var(--scale) * 40px); height: calc(var(--scale) * 40px); }
+  main { padding-top: calc(var(--scale) * 80px); }
+  .profile { grid-template-columns: auto auto; justify-content: center; column-gap: calc(var(--scale) * 16px); }
+  .who h1 { font-size: max(calc(var(--scale) * 22px), calc(40 * var(--u))); }
+  .more, .more img { width: calc(var(--scale) * 20px); height: calc(var(--scale) * 20px); }
+  .more, .links { margin-left: calc(var(--scale) * 8px); top: calc(var(--scale) * 2px); }
+  .gh { width: calc(var(--scale) * 28px); height: calc(var(--scale) * 28px); }
+  .gh img {
+    left: calc(var(--scale) * 1.5px); top: calc(var(--scale) * 1.5px);
+    width: calc(var(--scale) * 22.6px); height: calc(var(--scale) * 25px);
+  }
+  h2 { font-size: max(calc(var(--scale) * 20px), calc(32 * var(--u))); }
+  .label { font-size: max(calc(var(--scale) * 15px), calc(24 * var(--u))); }
+  .label img { width: calc(var(--scale) * 16px); height: calc(var(--scale) * 16px); }
+  .role .title { font-size: max(calc(var(--scale) * 19px), calc(32 * var(--u))); }
+  .role .date { font-size: max(calc(var(--scale) * 13px), calc(20 * var(--u))); }
+  .career li { grid-template-columns: calc(90 * var(--u)) minmax(0, 1fr); }
+  .org { font-size: max(calc(var(--scale) * 14px), calc(24 * var(--u))); white-space: normal; overflow-wrap: anywhere; }
+  .org:lang(en) { font-size: max(calc(var(--scale) * 16px), calc(28 * var(--u))); }
+  .back { font-size: max(calc(var(--scale) * 20px), calc(32 * var(--u))); }
+  .back img { width: calc(var(--scale) * 18px); height: calc(var(--scale) * 18px); }
+  .work { grid-template-columns: 1fr; row-gap: calc(var(--scale) * 20px); padding: 0; }
+  .info { order: -1; padding-top: 0; }
+  .info h1 { font-size: max(calc(var(--scale) * 26px), calc(40 * var(--u))); }
+  .info .desc { font-size: max(calc(var(--scale) * 16px), calc(24 * var(--u))); }
+  .player { padding: calc(var(--scale) * 10px); border-radius: calc(var(--scale) * 24px); }
+  .player video { border-radius: calc(var(--scale) * 14px); }
+}
